@@ -84,10 +84,10 @@ func main() {
 				Database: config.Influxdb.Database,
 			})
 
-			cnt := 0
+			var cnt int64
 			for _, request := range requests.Requests {
 				server, _ := request.Tags.Get("server")
-				if !in(server, config.Whitelist.ServerNames) {
+				if len(config.Whitelist.ServerNames) > 0 && !in(server, config.Whitelist.ServerNames) {
 					continue
 				}
 
@@ -98,7 +98,7 @@ func main() {
 					map[string]interface{}{
 						"request_time": request.RequestTime,
 					},
-					time.Unix(requests.Timestamp, 0),
+					time.Unix(requests.Timestamp, cnt), // cnt as nsec - so that all of our metrics have unique timestamp
 				)
 				if err != nil {
 					log.Printf("[ERROR] Failed to create datapoint: %v", err)
@@ -116,7 +116,7 @@ func main() {
 							"value": timer.Value,
 							"hits":  int64(timer.HitCount),
 						},
-						time.Unix(requests.Timestamp, 0),
+						time.Unix(requests.Timestamp, cnt), // cnt as nsec - so that all of our metrics have unique timestamp
 					)
 					if err != nil {
 						log.Printf("[ERROR] Failed to create datapoint: %v", err)
