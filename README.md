@@ -3,9 +3,11 @@
 ## InfluxDB Preparation
 
 Create database:
+
     CREATE DATABASE "pinba"
 
 Create retention policy:
+
     CREATE RETENTION POLICY "realtime" ON "pinba" DURATION 2h REPLICATION 1 DEFAULT
     CREATE RETENTION POLICY "month" ON "pinba" DURATION 4w REPLICATION 1
     CREATE RETENTION POLICY "year" ON "pinba" DURATION 52w REPLICATION 1
@@ -14,6 +16,7 @@ Create retention policy:
 And now, interesting part - continuous queries.
 
 For downsampling realtime data to 10s:
+
     CREATE CONTINUOUS QUERY "cq_requests_10s" ON "pinba" BEGIN
         SELECT
             count("request_time") / 10 AS "rps",
@@ -37,6 +40,7 @@ For downsampling realtime data to 10s:
         GROUP BY time(10s), * END
 
 For downsampling realtime data to 60s:
+
     CREATE CONTINUOUS QUERY "cq_requests_60s" ON "pinba" BEGIN
         SELECT
             count("request_time") / 60 AS "rps",
@@ -60,6 +64,7 @@ For downsampling realtime data to 60s:
         GROUP BY time(60s), * END
 
 And for downsampling realtime data to 10m:
+
     CREATE CONTINUOUS QUERY "cq_requests_10m" ON "pinba" BEGIN
         SELECT
             count("request_time") / 600 AS "rps",
