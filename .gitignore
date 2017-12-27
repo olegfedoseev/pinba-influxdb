@@ -12,3 +12,7 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+deb/etc/pinba-influxer/config.yml
+deb/usr/bin/pinba-influxer
+*.deb
+config.yml

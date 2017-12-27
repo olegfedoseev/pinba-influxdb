@@ -1,0 +1,12 @@
+[Unit]
+Description=pinba-influxer
+
+[Service]
+ExecStart=/usr/bin/pinba-influxer --config=/etc/pinba-influxer/config.yml
+Restart=always
+PIDFile=/var/run/pinba-influxer.pid
+LimitNOFILE=4096
+ExecReload=/bin/kill -SIGUSR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

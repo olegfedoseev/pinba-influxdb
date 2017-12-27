@@ -1,0 +1,21 @@
+pinba:
+  host: "pinba-host:5002"
+  connect_timeout: "500ms"
+  read_timeout: "5s"
+
+influxdb:
+  addr: "http://influxdb:8086"
+  user: "username"
+  password: "secret"
+  database: "pinba-database"
+
+whitelist:
+  servers:
+  - "example.com"
+  - "api.example.com"
+
+  tags:
+  - "server"
+  - "region"
+  - "script"
+  - "status"
