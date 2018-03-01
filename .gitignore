@@ -16,3 +16,5 @@ deb/etc/pinba-influxer/config.yml
 deb/usr/bin/pinba-influxer
 *.deb
 config.yml
+.github_token
+.goreleaser-n1.yml

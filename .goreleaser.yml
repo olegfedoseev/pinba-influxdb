@@ -1,0 +1,43 @@
+project_name: pinba-influxer
+
+# Build customization
+builds:
+  - binary: pinba-influxer
+    goos:
+      - linux
+    goarch:
+      - amd64
+
+# Archive customization
+archive:
+  files:
+    - LICENSE
+    - README.md
+    - config.yml.example
+
+nfpm:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+  homepage: https://github.com/olegfedoseev/pinba-influxdb
+  maintainer: Oleg Fedoseev <oleg.fedoseev@me.com>
+  description: Pinba gateway to InfluxDB
+  license: MIT
+  formats:
+    - deb
+  files:
+    "scripts/etc/pinba-influxer/": "/etc/pinba-influxer"
+    "scripts/usr/lib/pinba-influxer/": "/usr/lib/pinba-influxer"
+  config_files:
+    "scripts/etc/pinba-influxer/config.yml.example": "/etc/etc/pinba-influxer/config.yml"
+
+release:
+  github:
+    owner: olegfedoseev
+    name: pinba-influxdb
+
+  name_template: "{{.ProjectName}}-v{{.Version}}"
+
+  # If set to true, will not auto-publish the release.
+  draft: false
+  # If set to true, will mark the release as not ready for production.
+  prerelease: true
+
