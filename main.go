@@ -45,7 +45,11 @@ func getConfig(filename string) (*config, error) {
 	return &cfg, nil
 }
 
+var version = "master"
+
 func main() {
+	log.Println(version)
+
 	var configFile = flag.String("config", "config.yml", "config name, default - config.yml")
 	flag.Parse()
 
