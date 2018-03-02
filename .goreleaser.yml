@@ -34,8 +34,6 @@ release:
     owner: olegfedoseev
     name: pinba-influxdb
 
-  name_template: "{{.ProjectName}}-v{{.Version}}"
-
   # If set to true, will not auto-publish the release.
   draft: false
   # If set to true, will mark the release as not ready for production.

@@ -18,3 +18,4 @@ deb/usr/bin/pinba-influxer
 config.yml
 .github_token
 .goreleaser-n1.yml
+dist/
