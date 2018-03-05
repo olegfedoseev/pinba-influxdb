@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"strings"
 	"time"
 
 	influxdb "github.com/influxdata/influxdb/client/v2"
@@ -10,6 +11,21 @@ import (
 )
 
 var version = "master"
+
+func newInfluxdbClient(cfg *config, userAgent string) (influxdb.Client, error) {
+	if strings.HasPrefix(cfg.Influxdb.Addr, "http") {
+		return influxdb.NewHTTPClient(influxdb.HTTPConfig{
+			Addr:      cfg.Influxdb.Addr,
+			Username:  cfg.Influxdb.User,
+			Password:  cfg.Influxdb.Password,
+			UserAgent: userAgent,
+		})
+	}
+
+	return influxdb.NewUDPClient(influxdb.UDPConfig{
+			Addr: cfg.Influxdb.Addr,
+	})
+}
 
 func main() {
 	log.Println(version)
@@ -22,13 +38,11 @@ func main() {
 		log.Fatalf("Failed to load config from %v: %v", *configFile, err)
 	}
 
-	// Create a new HTTPClient
-	influxdbClient, err := influxdb.NewHTTPClient(influxdb.HTTPConfig{
-		Addr:      config.Influxdb.Addr,
-		Username:  config.Influxdb.User,
-		Password:  config.Influxdb.Password,
-		UserAgent: "pinba-influxer",
-	})
+	influxdbClient, err := newInfluxdbClient(
+		config,
+		"pinba-influxer",
+	)
+
 	if err != nil {
 		log.Fatal(err)
 	}

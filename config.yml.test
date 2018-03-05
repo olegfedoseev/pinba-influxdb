@@ -4,10 +4,21 @@ pinba:
   read_timeout: "5s"
 
 influxdb:
+
+# Http usage:
+# "addr" should be of the form "http://host:port"
+# or "http://[ipv6-host%zone]:port".
+#
   addr: "http://influxdb:8086"
   user: "username"
   password: "secret"
   database: "pinba-database"
+
+# Udp usage:
+# "addr" should be of the form "host:port"
+# or "[ipv6-host%zone]:port".
+#
+#  addr: "influxdb:8883"
 
 whitelist:
   servers:
