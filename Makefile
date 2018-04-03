@@ -27,3 +27,14 @@ deb:
 version:
 	@echo $(VERSION)-$(COMMIT)
 
+.PHONY: influxdb
+influxdb:
+	docker rm -f influxdb || true
+	docker run --name influxdb -d -p 8086:8086 -e INFLUXDB_USER=pinba -e INFLUXDB_USER_PASSWORD=pinba influxdb:1.5-alpine
+	sleep 5
+	curl -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE \"pinba\""
+	curl -XPOST http://localhost:8086/query --data-urlencode "q=CREATE RETENTION POLICY \"realtime\" ON \"pinba\" DURATION 2h REPLICATION 1 DEFAULT"
+
+.PHONY: influxdb-cli
+influxdb-cli:
+	docker run --rm --link=influxdb -it influxdb:1.5-alpine influx -host influxdb
