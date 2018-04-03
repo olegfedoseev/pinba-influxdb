@@ -23,7 +23,7 @@ func newInfluxdbClient(cfg *config, userAgent string) (influxdb.Client, error) {
 	}
 
 	return influxdb.NewUDPClient(influxdb.UDPConfig{
-			Addr: cfg.Influxdb.Addr,
+		Addr: cfg.Influxdb.Addr,
 	})
 }
 
@@ -38,11 +38,7 @@ func main() {
 		log.Fatalf("Failed to load config from %v: %v", *configFile, err)
 	}
 
-	influxdbClient, err := newInfluxdbClient(
-		config,
-		"pinba-influxer",
-	)
-
+	influxdbClient, err := newInfluxdbClient(config, "pinba-influxer")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -112,7 +108,7 @@ func main() {
 			// Write the batch
 			t := time.Now()
 			if err := influxdbClient.Write(batch); err != nil {
-				log.Fatal(err)
+				log.Printf("Failed to write %v points for %v: %v", cnt, requests.Timestamp, err)
 			}
 			log.Printf("Writen %d datapoints in %v\n", cnt, time.Since(t))
 		}
