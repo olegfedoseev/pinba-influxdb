@@ -26,7 +26,6 @@ nfpm:
   files:
     "scripts/etc/pinba-influxer/": "/etc/pinba-influxer"
     "scripts/usr/lib/pinba-influxer/": "/usr/lib/pinba-influxer"
-    "scripts/usr/lib/pinba-influxer/pinba-influxer.service": "/usr/lib/pinba-influxer/pinba-influxer.service"
     "scripts/usr/lib/pinba-influxer/pinba-influxer.service": "/lib/systemd/system/pinba-influxer.service"
   config_files:
     "scripts/etc/pinba-influxer/config.yml.example": "/etc/pinba-influxer/config.yml"

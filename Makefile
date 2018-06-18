@@ -14,14 +14,9 @@ clean:
 build:
 	GOOS=linux go build -o deb/usr/bin/pinba-influxer main.go
 
-.PHONY: deb
-deb:
-	fpm -s dir -t deb -C deb \
-		--version $(VERSION)-$(COMMIT) \
-		--package pinba-influxer-$(VERSION)-$(COMMIT).deb \
-		--name pinba-influxer \
-		--config-files etc/pinba-influxer/config.yml \
-		--deb-systemd deb/usr/lib/pinba-influxer/pinba-influxer.service
+.PHONY: release
+release:
+	goreleaser --rm-dist
 
 .PHONY: version
 version:

@@ -2,7 +2,7 @@
 Description=pinba-influxer
 
 [Service]
-ExecStart=/usr/bin/pinba-influxer --config=/etc/pinba-influxer/config.yml
+ExecStart=/usr/local/bin/pinba-influxer --config=/etc/pinba-influxer/config.yml
 Restart=always
 PIDFile=/var/run/pinba-influxer.pid
 LimitNOFILE=4096
